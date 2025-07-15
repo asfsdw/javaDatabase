@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+// 회원관리 서비스파일
 public class HoewonService {
 	Scanner scanner = new Scanner(System.in);
 	HoewonDAO dao = new HoewonDAO();
@@ -28,7 +29,9 @@ public class HoewonService {
 				continue;
 			}
 			
-			if(Pattern.matches(regName, name)) break;
+			if(Pattern.matches(regName, name)) {
+				break;
+			}
 			else {
 				System.out.println("이름은 한글, 20자 이내로 기입해주세요.\n");
 				continue;
