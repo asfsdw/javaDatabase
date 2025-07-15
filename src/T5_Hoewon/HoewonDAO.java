@@ -210,6 +210,7 @@ public class HoewonDAO {
 		}
 		else {
 			System.out.println("이름은 한글, 20자 이내로 기입해주세요.\n");
+			// vo에 null을 주면 service 객체에서 걸리기 때문에 입력한 이름을 vo에 넣어 돌려준다.
 			vo.setName(name);
 		}
 		return vo;
