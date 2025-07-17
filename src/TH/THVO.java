@@ -3,49 +3,40 @@ package TH;
 import java.util.Arrays;
 
 public class THVO {
-	private int point;
-	private Object[][] trump = {
-			{"♠", 9.3},
-			{"♠", 10.3},
-			{"♠", 11.3},
-			{"♠", 12.3},
-			{"♠", 13.3},
-			{"♠", 14.3},
-			{"◇", 9.2},
-			{"◇", 10.2},
-			{"◇", 11.2},
-			{"◇", 12.2},
-			{"◇", 13.2},
-			{"◇", 14.2},
-			{"♡", 9.1},
-			{"♡", 10.1},
-			{"♡", 11.1},
-			{"♡", 12.1},
-			{"♡", 13.1},
-			{"♡", 14.1},
-			{"♣", 9.0},
-			{"♣", 10.0},
-			{"♣", 11.0},
-			{"♣", 12.0},
-			{"♣", 13.0},
-			{"♣", 14.0}
-			};
+	private int idx, point;
+	private String name;
+//	1.0은 클로버9, 1.3은 스페이드9...6.1은 하트A, 6.2는 다이아A
+	private double[] trump = {
+			1.0,1.1,1.2,1.3,2.0,2.1,2.2,2.3,3.0,3.1,3.2,3.3,4.0,4.1,4.2,4.3,
+			5.0,5.1,5.2,5.3,6.0,6.1,6.2,6.3};
 	
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public int getPoint() {
 		return point;
 	}
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public Object[][] getTrump() {
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public double[] getTrump() {
 		return trump;
 	}
-	public void setTrump(Object[][] trump) {
+	public void setTrump(double[] trump) {
 		this.trump = trump;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "THVO [point=" + point + ", trump=" + Arrays.toString(trump) + "]";
+		return "THVO [idx=" + idx + ", point=" + point + ", name=" + name + ", trump=" + Arrays.toString(trump) + "]";
 	}
 }
