@@ -177,6 +177,13 @@ public class InsaInput {
 		btnClose.setBounds(533, 10, 145, 64);
 		pn3.add(btnClose);
 		
+//		오늘 날짜를 입사일에 표시하기.
+		InsaService service = new InsaService();
+		vo = service.getCurrentDate();
+		cbYY.setSelectedItem(vo.getCbYY());
+		cbMM.setSelectedItem(vo.getCbMM());
+		cbDD.setSelectedItem(vo.getCbDD());
+		
 		frame.setVisible(true);
 
 //		창닫기 버튼

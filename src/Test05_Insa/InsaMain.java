@@ -104,10 +104,17 @@ public class InsaMain {
 				
 				if(vo.getName() == null) JOptionPane.showMessageDialog(frame, "검색한 사원이 존재하지 않습니다.");
 				else {
-					System.out.println(vo);
 					frame.dispose();
 					new InsaSearch(vo);
 				}
+			}
+		});
+		
+//		전체조회 버튼
+		btnList.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				new InsaList();
 			}
 		});
 	}

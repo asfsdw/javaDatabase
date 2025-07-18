@@ -165,15 +165,15 @@ public class InsaSearch {
 		frame.getContentPane().add(pn3);
 		pn3.setLayout(null);
 		
-		JButton btnInput = new JButton("수정하기");
-		btnInput.setFont(new Font("굴림", Font.BOLD, 20));
-		btnInput.setBounds(81, 10, 145, 64);
-		pn3.add(btnInput);
+		JButton btnUpdate = new JButton("수정하기");
+		btnUpdate.setFont(new Font("굴림", Font.BOLD, 20));
+		btnUpdate.setBounds(81, 10, 145, 64);
+		pn3.add(btnUpdate);
 		
-		JButton btnRest = new JButton("사원삭제");
-		btnRest.setFont(new Font("굴림", Font.BOLD, 20));
-		btnRest.setBounds(307, 10, 145, 64);
-		pn3.add(btnRest);
+		JButton btnDelete = new JButton("사원삭제");
+		btnDelete.setFont(new Font("굴림", Font.BOLD, 20));
+		btnDelete.setBounds(307, 10, 145, 64);
+		pn3.add(btnDelete);
 		
 		JButton btnClose = new JButton("창닫기");
 		btnClose.setFont(new Font("굴림", Font.BOLD, 20));
@@ -205,20 +205,15 @@ public class InsaSearch {
 			}
 		});
 		
-//		가입하기 버튼
-		btnInput.addActionListener(new ActionListener() {
+//		수정하기 버튼
+		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = txtName.getText().trim();
 				String age = txtAge.getText().trim();
 				String gender = "";
 				String ipsail = cbYY.getSelectedItem()+"-"+cbMM.getSelectedItem()+"-"+cbDD.getSelectedItem();
 				
 //				유효성 검사
-				if(name.equals("")) {
-					JOptionPane.showMessageDialog(frame, "이름을 입력해주세요,");
-					txtName.requestFocus();
-				}
-				else if(!Pattern.matches("^[0-9]+$", age)) {
+				if(!Pattern.matches("^[0-9]+$", age)) {
 					JOptionPane.showMessageDialog(frame, "나이는 숫자로 입력해주세요,");
 					txtAge.requestFocus();
 				}
@@ -230,22 +225,37 @@ public class InsaSearch {
 //				회원명 중복처리
 //				중복처리 완료 후
 				vo = new InsaVO();
-				vo.setName(name); 
+				vo.setName(txtName.getText()); 
 				vo.setAge(Integer.parseInt(age));
 				vo.setGender(gender);
 				vo.setIpsail(ipsail);
 				
-				res = dao.setInsaInput(vo);
+				res = dao.setInsaUpdate(vo);
 				
 				if(res != 0) {
-					JOptionPane.showMessageDialog(frame, "회원가입이 완료되었습니다.");
+					JOptionPane.showMessageDialog(frame, "사원정보가 수정되었습니다.");
 					frame.dispose();
 					new InsaMain();
 				}
-				else {
-					JOptionPane.showMessageDialog(frame, "회원가입에 실패했습니다.");
-					txtName.requestFocus();
+				else JOptionPane.showMessageDialog(frame, "사원정보 수정에 실패했습니다.");
+			}
+		});
+		
+//		사원 삭제(마우스)
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = txtName.getText();
+				int ans = JOptionPane.showConfirmDialog(frame, "정말로 삭제하시겠습니까?", "사원삭제", JOptionPane.YES_NO_OPTION);
+				if(ans == 0) {
+					int res = dao.setInsaDelete(name);
+					if(res != 0) {
+						JOptionPane.showMessageDialog(frame, "사원이 삭제되었습니다.");
+						frame.dispose();
+						new InsaMain();
+					}
+					else JOptionPane.showMessageDialog(frame, "사원삭제에 실패했습니다.");
 				}
+				else JOptionPane.showMessageDialog(frame, "사원삭제를 취소했습니다.");
 			}
 		});
 	}

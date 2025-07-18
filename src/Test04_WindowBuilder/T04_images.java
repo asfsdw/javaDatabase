@@ -85,22 +85,22 @@ public class T04_images {
 		pn2.setLayout(null);
 		
 		lblImage1 = new JLabel("");
-		lblImage1.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/1.png")));
+		lblImage1.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/01.png")));
 		lblImage1.setBounds(4, 10, 234, 369);
 		pn2.add(lblImage1);
 		
 		lblImage2 = new JLabel("");
-		lblImage2.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/3.png")));
+		lblImage2.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/03.png")));
 		lblImage2.setBounds(242, 10, 234, 369);
 		pn2.add(lblImage2);
 		
 		lblImage3 = new JLabel("");
-		lblImage3.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/5.png")));
+		lblImage3.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/05.png")));
 		lblImage3.setBounds(480, 10, 234, 369);
 		pn2.add(lblImage3);
 		
 		lblImage4 = new JLabel("");
-		lblImage4.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/6.jpg")));
+		lblImage4.setIcon(new ImageIcon(T04_images.class.getResource("/Test04_WindowBuilder/images/06.jpg")));
 		lblImage4.setBounds(718, 10, 234, 369);
 		pn2.add(lblImage4);
 		
@@ -153,10 +153,8 @@ public class T04_images {
 //		1번보기 버튼
 		btn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				allClose();
 				lblImage1.setVisible(true);
-				lblImage2.setVisible(false);
-				lblImage3.setVisible(false);
-				lblImage4.setVisible(false);
 				img1Cnt1++;
 				displayCount();
 			}
@@ -165,10 +163,8 @@ public class T04_images {
 //		2번보기 버튼
 		btn3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblImage1.setVisible(false);
+				allClose();
 				lblImage2.setVisible(true);
-				lblImage3.setVisible(false);
-				lblImage4.setVisible(false);
 				img1Cnt2++;
 				displayCount();
 			}
@@ -177,10 +173,8 @@ public class T04_images {
 //		3번보기 버튼
 		btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblImage1.setVisible(false);
-				lblImage2.setVisible(false);
+				allClose();
 				lblImage3.setVisible(true);
-				lblImage4.setVisible(false);
 				img1Cnt3++;
 				displayCount();
 			}
@@ -189,9 +183,7 @@ public class T04_images {
 //		4번보기 버튼
 		btn5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lblImage1.setVisible(false);
-				lblImage2.setVisible(false);
-				lblImage3.setVisible(false);
+				allClose();
 				lblImage4.setVisible(true);
 				img1Cnt4++;
 				displayCount();
@@ -202,31 +194,20 @@ public class T04_images {
 		btn6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int rand = (int)(Math.random()*4)+1;
+				allClose();
 				if(rand == 1) {
 					lblImage1.setVisible(true);
-					lblImage2.setVisible(false);
-					lblImage3.setVisible(false);
-					lblImage4.setVisible(false);
 					img1Cnt1++;
 				}
 				else if(rand == 2) {
-					lblImage1.setVisible(false);
 					lblImage2.setVisible(true);
-					lblImage3.setVisible(false);
-					lblImage4.setVisible(false);
 					img1Cnt2++;
 				}
 				else if(rand == 3) {
-					lblImage1.setVisible(false);
-					lblImage2.setVisible(false);
 					lblImage3.setVisible(true);
-					lblImage4.setVisible(false);
 					img1Cnt3++;
 				}
 				else if(rand == 4) {
-					lblImage1.setVisible(false);
-					lblImage2.setVisible(false);
-					lblImage3.setVisible(false);
 					lblImage4.setVisible(true);
 					img1Cnt4++;
 				}

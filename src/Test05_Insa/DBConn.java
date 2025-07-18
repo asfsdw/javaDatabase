@@ -16,7 +16,6 @@ public class DBConn {
 	public DBConn() {
 		String url = "jdbc:mysql://localhost:3306/springgroup"
 				,user = "atom", password = "1234";
-		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(url, user, password);

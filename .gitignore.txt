@@ -1,0 +1,6 @@
+.settings/
+myImages/
+.classpath
+.project
+.gitignore
+src/Test04_WindowBuilder/images/
