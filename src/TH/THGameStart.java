@@ -31,11 +31,12 @@ public class THGameStart {
   private JLabel lblFieldPoint, lblCpu1Point, lblCpu2Point, lblCpu3Point, lblPlPoint;
   
   JRadioButton rdRaise, rdCall, rdFold;
+  JButton btnAction;
   
 	int plCnt = 0, gameCnt = 0, point = 0,
 			cpu1Point = 10000, cpu2Point = 10000, cpu3Point = 10000;
 	String name = "", about = "";
-	boolean cpu1 = true, cpu2 = true, cpu3 = true;
+	boolean cpu1 = true,  cpu2 = true, cpu3 = true, cpu1Fold = false, cpu2Fold = false, cpu3Fold = false;
 
 	public THGameStart(String name, int point) {
 		this.name = name;
@@ -161,7 +162,7 @@ public class THGameStart {
 		lblPlPoint.setBounds(564, 347, 90, 33);
 		frame.getContentPane().add(lblPlPoint);
 		
-		JButton btnAction = new JButton("선택");
+		btnAction = new JButton("선택");
 		btnAction.setBackground(Color.WHITE);
 		btnAction.setFont(new Font("굴림", Font.BOLD, 15));
 		btnAction.setBounds(564, 495, 90, 40);
@@ -171,7 +172,7 @@ public class THGameStart {
 		lblTrun.setBackground(Color.WHITE);
 		lblTrun.setFont(new Font("굴림", Font.BOLD, 20));
 		lblTrun.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTrun.setBounds(176, 346, 369, 43);
+		lblTrun.setBounds(128, 346, 436, 43);
 		frame.getContentPane().add(lblTrun);
 		
 		JLabel lblNewLabel = new JLabel(name);
@@ -270,6 +271,7 @@ public class THGameStart {
 					rdRaise.setEnabled(false);
 					rdCall.setEnabled(false);
 					rdFold.setEnabled(false);
+					btnAction.setEnabled(false);
 					cpu1Action();
 				}
 				else if(rdCall.isSelected()) {
@@ -281,17 +283,18 @@ public class THGameStart {
 					rdRaise.setEnabled(false);
 					rdCall.setEnabled(false);
 					rdFold.setEnabled(false);
+					btnAction.setEnabled(false);
 					cpu1Action();
 				}
 				else if(rdFold.isSelected()) {
-					about = showDown();
 					lblTrun.setText(about);
 					gameCnt++;
 					frame.repaint();
 					rdRaise.setEnabled(false);
 					rdCall.setEnabled(false);
 					rdFold.setEnabled(false);
-					resetGame();
+					btnAction.setEnabled(false);
+					showDown();
 				}
 			}
 		});
@@ -321,8 +324,7 @@ public class THGameStart {
 				about = "CPU1이 Fold를 선택했습니다.";
 				lblTrun.setText(about);
 				plCnt++;
-				frame.repaint();
-				cpu2Action();
+				cpu1Fold = true;
 				cpu1 = false;
 			}
 			else if(action <= 15) {
@@ -331,8 +333,6 @@ public class THGameStart {
 				cpu1Point -= dao.fieldMoney;
 				lblCpu1Point.setText(cpu1Point+"");
 				plCnt++;
-				frame.repaint();
-				cpu2Action();
 			}
 			else {
 				about = "CPU1이 Raise를 선택했습니다";
@@ -340,15 +340,22 @@ public class THGameStart {
 				cpu1Point -= dao.fieldMoney*2;
 				lblCpu1Point.setText(cpu1Point+"");
 				plCnt++;
-				frame.repaint();
-				cpu2Action();
 			}
+			frame.repaint();
 		}
 		else {
 			plCnt++;
 			frame.repaint();
 			cpu2Action();
 		}
+//			swing 딜레이 메소드
+		new javax.swing.Timer(500, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((javax.swing.Timer)e.getSource()).stop();
+				cpu2Action();
+			}
+		}).start();
 	}
 	private void cpu2Action() {
 //		cpu2액션 선택
@@ -359,8 +366,7 @@ public class THGameStart {
 				about = "CPU2이 Fold를 선택했습니다.";
 				lblTrun.setText(about);
 				plCnt++;
-				frame.repaint();
-				cpu3Action();
+				cpu2Fold = true;
 				cpu2 = false;
 			}
 			else if(action <= 15) {
@@ -369,8 +375,6 @@ public class THGameStart {
 				cpu2Point -= dao.fieldMoney;
 				lblCpu2Point.setText(cpu2Point+"");
 				plCnt++;
-				frame.repaint();
-				cpu3Action();
 			}
 			else {
 				about = "CPU2이 Raise를 선택했습니다.";
@@ -378,15 +382,21 @@ public class THGameStart {
 				cpu2Point -= dao.fieldMoney*2;
 				lblCpu2Point.setText(cpu2Point+"");
 				plCnt++;
-				frame.repaint();
-				cpu3Action();
 			}
+			frame.repaint();
 		}
 		else {
 			plCnt++;
 			frame.repaint();
 			cpu3Action();
 		}
+		new javax.swing.Timer(500, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				((javax.swing.Timer)e.getSource()).stop();
+				cpu3Action();
+			}
+		}).start();
 	}
 	private void cpu3Action() {
 //		cpu3액션 선택
@@ -402,6 +412,8 @@ public class THGameStart {
 				rdRaise.setEnabled(true);
 				rdCall.setEnabled(true);
 				rdFold.setEnabled(true);
+				btnAction.setEnabled(true);
+				cpu3Fold = true;
 				cpu3 = false;
 			}
 			else if(action <= 15) {
@@ -415,6 +427,7 @@ public class THGameStart {
 				rdRaise.setEnabled(true);
 				rdCall.setEnabled(true);
 				rdFold.setEnabled(true);
+				btnAction.setEnabled(true);
 			}
 			else {
 				about = "CPU3이 Raise를 선택했습니다.";
@@ -427,6 +440,7 @@ public class THGameStart {
 				rdRaise.setEnabled(true);
 				rdCall.setEnabled(true);
 				rdFold.setEnabled(true);
+				btnAction.setEnabled(true);
 			}
 		}
 		else {
@@ -438,8 +452,10 @@ public class THGameStart {
 			rdRaise.setEnabled(true);
 			rdCall.setEnabled(true);
 			rdFold.setEnabled(true);
+			btnAction.setEnabled(true);
 		}
-		fieldFlip();
+		if(cpu1Fold == true && cpu2Fold == true && cpu3Fold == true) showDown();
+		else fieldFlip();
 	}
 	
 	private void fieldFlip() {
@@ -458,15 +474,22 @@ public class THGameStart {
 			frame.repaint();
 		}
 		else if(gameCnt == 4) {
-			about = showDown();
-			lblTrun.setText(about);
-			dao.fieldMoney += 5;
-			resetGame();
+			showDown();
 		}
 	}
 
 	private String showDown() {
 		String res = "";
+
+		cpu1 = true;
+		cpu2 = true;
+		cpu3 = true;
+		
+		rdRaise.setEnabled(false);
+		rdCall.setEnabled(false);
+		rdFold.setEnabled(false);
+		btnAction.setEnabled(false);
+		
 		lblCpu11.setIcon(new ImageIcon(THGameStart.class.getResource(service.getCpu1Hand1().getImagePath())));
 		lblCpu12.setIcon(new ImageIcon(THGameStart.class.getResource(service.getCpu1Hand2().getImagePath())));
 		lblCpu21.setIcon(new ImageIcon(THGameStart.class.getResource(service.getCpu2Hand1().getImagePath())));
@@ -483,9 +506,24 @@ public class THGameStart {
 		double cpu1Handrank = service.handRank(service.getCpu1Hand1().getCard(), service.getCpu1Hand2().getCard(), service.getField1().getCard(),service.getField2().getCard(),service.getField3().getCard(),service.getField4().getCard(),service.getField5().getCard());
 		double cpu2Handrank = service.handRank(service.getCpu2Hand1().getCard(), service.getCpu2Hand2().getCard(), service.getField1().getCard(),service.getField2().getCard(),service.getField3().getCard(),service.getField4().getCard(),service.getField5().getCard());
 		double cpu3Handrank = service.handRank(service.getCpu3Hand1().getCard(), service.getCpu3Hand2().getCard(), service.getField1().getCard(),service.getField2().getCard(),service.getField3().getCard(),service.getField4().getCard(),service.getField5().getCard());
+		if(rdFold.isSelected()) plHandrank = 0.0;
+		if(cpu1Fold) cpu1Handrank = 0.0; cpu1Fold = false;
+		if(cpu2Fold) cpu2Handrank = 0.0; cpu2Fold = false;
+		if(cpu3Fold) cpu3Handrank = 0.0; cpu3Fold = false;
 		
 		if(plHandrank >= cpu1Handrank && plHandrank >= cpu2Handrank && plHandrank >= cpu3Handrank) {
-			res = "당신의 승리입니다!";
+			if(plHandrank == 1000.0) res = "당신이 로열 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 900.0) res = "당신이 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 800.0) res = "당신이 포카드로 승리했습니다!";
+			else if(plHandrank == 700.0) res = "당신이 풀하우스로 승리했습니다!";
+			else if(plHandrank == 600.0) res = "당신이 플러쉬로 승리했습니다!";
+			else if(plHandrank == 500.0) res = "당신이 스트레이트탑으로 승리했습니다!";
+			else if(plHandrank == 400.0) res = "당신이 스트레이트로 승리했습니다!";
+			else if(plHandrank == 300.0) res = "당신이 트리플로 승리했습니다!";
+			else if(plHandrank == 200.0) res = "당신이 투페어로 승리했습니다!";
+			else if(plHandrank == 100.0) res = "당신이 원페어로 승리했습니다!";
+			else res = "당신이 하이카드로 승리했습니다!";
+			lblTrun.setText(res);
 			point = dao.pointResult(name);
 			if(cpu1Point < 0 || cpu2Point < 0 || cpu3Point < 0) {
 				JOptionPane.showConfirmDialog(frame, "당신이 게임에서 승리했습니다!","돌아가기",JOptionPane.PLAIN_MESSAGE);
@@ -495,7 +533,18 @@ public class THGameStart {
 			}
 		}
 		else if(cpu1Handrank > plHandrank && cpu1Handrank > cpu2Handrank && cpu1Handrank > cpu3Handrank) {
-			res = "CPU1의 승리입니다!";
+			if(plHandrank == 1000.0) res = "CPU1이 로열 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 900.0) res = "CPU1이 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 800.0) res = "CPU1이 포카드로 승리했습니다!";
+			else if(plHandrank == 700.0) res = "CPU1이 풀하우스로 승리했습니다!";
+			else if(plHandrank == 600.0) res = "CPU1이 플러쉬로 승리했습니다!";
+			else if(plHandrank == 500.0) res = "CPU1이 스트레이트탑으로 승리했습니다!";
+			else if(plHandrank == 400.0) res = "CPU1이 스트레이트로 승리했습니다!";
+			else if(plHandrank == 300.0) res = "CPU1이 트리플로 승리했습니다!";
+			else if(plHandrank == 200.0) res = "CPU1이 투페어로 승리했습니다!";
+			else if(plHandrank == 100.0) res = "CPU1이 원페어로 승리했습니다!";
+			else res = "CPU1이 하이카드로 승리했습니다!";
+			lblTrun.setText(res);
 			cpu1Point += dao.fieldMoney;
 			if(point < 0 || cpu2Point < 0 || cpu3Point < 0) {
 				JOptionPane.showConfirmDialog(frame, "CPU1이 게임에서 승리했습니다!","돌아가기",JOptionPane.WARNING_MESSAGE);
@@ -505,7 +554,18 @@ public class THGameStart {
 			}
 		}
 		else if(cpu2Handrank > plHandrank && cpu2Handrank > cpu1Handrank && cpu2Handrank > cpu3Handrank) {
-			res = "CPU2의 승리입니다!";
+			if(plHandrank == 1000.0) res = "CPU2가 로열 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 900.0) res = "CPU2가 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 800.0) res = "CPU2가 포카드로 승리했습니다!";
+			else if(plHandrank == 700.0) res = "CPU2가 풀하우스로 승리했습니다!";
+			else if(plHandrank == 600.0) res = "CPU2가 플러쉬로 승리했습니다!";
+			else if(plHandrank == 500.0) res = "CPU2가 스트레이트탑으로 승리했습니다!";
+			else if(plHandrank == 400.0) res = "CPU2가 스트레이트로 승리했습니다!";
+			else if(plHandrank == 300.0) res = "CPU2가 트리플로 승리했습니다!";
+			else if(plHandrank == 200.0) res = "CPU2가 투페어로 승리했습니다!";
+			else if(plHandrank == 100.0) res = "CPU2가 원페어로 승리했습니다!";
+			else res = "CPU2가 하이카드로 승리했습니다!";
+			lblTrun.setText(res);
 			cpu2Point += dao.fieldMoney;
 			if(point < 0 || cpu1Point < 0 || cpu3Point < 0) {
 				JOptionPane.showConfirmDialog(frame, "CPU2이 게임에서 승리했습니다!","돌아가기",JOptionPane.WARNING_MESSAGE);
@@ -515,7 +575,18 @@ public class THGameStart {
 			}
 		}
 		else {
-			res = "CPU3의 승리입니다!";
+			if(plHandrank == 1000.0) res = "CPU3이 로열 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 900.0) res = "CPU3이 스트레이트 플러쉬로 승리했습니다!";
+			else if(plHandrank == 800.0) res = "CPU3이 포카드로 승리했습니다!";
+			else if(plHandrank == 700.0) res = "CPU3이 풀하우스로 승리했습니다!";
+			else if(plHandrank == 600.0) res = "CPU3이 플러쉬로 승리했습니다!";
+			else if(plHandrank == 500.0) res = "CPU3이 스트레이트탑으로 승리했습니다!";
+			else if(plHandrank == 400.0) res = "CPU3이 스트레이트로 승리했습니다!";
+			else if(plHandrank == 300.0) res = "CPU3이 트리플로 승리했습니다!";
+			else if(plHandrank == 200.0) res = "CPU3이 투페어로 승리했습니다!";
+			else if(plHandrank == 100.0) res = "CPU3이 원페어로 승리했습니다!";
+			else res = "CPU3이 하이카드로 승리했습니다!";
+			lblTrun.setText(res);
 			cpu3Point += dao.fieldMoney;
 			if(point < 0 || cpu1Point < 0 || cpu2Point < 0) {
 				JOptionPane.showConfirmDialog(frame, "CPU3이 게임에서 승리했습니다!","돌아가기",JOptionPane.WARNING_MESSAGE);
@@ -543,11 +614,20 @@ public class THGameStart {
 		lblFieldPoint.setText(dao.fieldMoney+"");
 		frame.setVisible(true);
 		frame.repaint();
-		service.cardDealStart();
+		
+		new javax.swing.Timer(2000, new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        ((javax.swing.Timer)e.getSource()).stop();
+        resetGame();
+      }
+		}).start();
 		return res;
 	}
 	
 	private void resetGame() {
+		service.cardDealStart();
+		
 		lblPL1.setIcon(new ImageIcon(getClass().getResource(service.getPlHand1().getImagePath())));
 		lblPL2.setIcon(new ImageIcon(getClass().getResource(service.getPlHand2().getImagePath())));
 		lblCpu11.setIcon(new ImageIcon(THGameStart.class.getResource("/TH/images/back.jpg")));
@@ -563,9 +643,12 @@ public class THGameStart {
 		lblField5.setIcon(new ImageIcon(THGameStart.class.getResource("/TH/images/back.jpg")));
 		frame.repaint();
 		
+		plCnt = 0;
+		gameCnt = 0;
+		
 		rdRaise.setEnabled(true);
 		rdCall.setEnabled(true);
 		rdFold.setEnabled(true);
-		
+		btnAction.setEnabled(true);
 	}
 }
