@@ -320,7 +320,7 @@ public class THGameStart {
 		if(cpu1 == true && plCnt == 1) {
 			int action = 0;
 			action = (int)(Math.random()*20);
-			if(action <= 5) {
+			if(action <= 4) {
 				about = "CPU1이 Fold를 선택했습니다.";
 				lblTrun.setText(about);
 				plCnt++;
@@ -344,9 +344,10 @@ public class THGameStart {
 			frame.repaint();
 		}
 		else {
+			about = "CPU1은 Fold상태 입니다.";
+			lblTrun.setText(about);
 			plCnt++;
 			frame.repaint();
-			cpu2Action();
 		}
 //			swing 딜레이 메소드
 		new javax.swing.Timer(500, new ActionListener() {
@@ -362,7 +363,7 @@ public class THGameStart {
 		if(cpu2 == true && plCnt == 2) {
 			int action = 0;
 			action = (int)(Math.random()*20);
-			if(action <= 5) {
+			if(action <= 4) {
 				about = "CPU2이 Fold를 선택했습니다.";
 				lblTrun.setText(about);
 				plCnt++;
@@ -386,9 +387,10 @@ public class THGameStart {
 			frame.repaint();
 		}
 		else {
+			about = "CPU2는 Fold상태 입니다.";
+			lblTrun.setText(about);
 			plCnt++;
 			frame.repaint();
-			cpu3Action();
 		}
 		new javax.swing.Timer(500, new ActionListener() {
 			@Override
@@ -403,7 +405,7 @@ public class THGameStart {
 		if(cpu3 == true && plCnt == 3) {
 			int action = 0;
 			action = (int)(Math.random()*20);
-			if(action <= 5) {
+			if(action <= 4) {
 				about = "CPU3이 Fold를 선택했습니다.";
 				lblTrun.setText(about);
 				plCnt = 0;
@@ -454,7 +456,17 @@ public class THGameStart {
 			rdFold.setEnabled(true);
 			btnAction.setEnabled(true);
 		}
-		if(cpu1Fold == true && cpu2Fold == true && cpu3Fold == true) showDown();
+		if(cpu1Fold == true && cpu2Fold == true && cpu3Fold == true) {
+			about = "다른 플레이어들이 모두 Fold상태 입니다.";
+			lblTrun.setText(about);
+			new javax.swing.Timer(1000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					((javax.swing.Timer)e.getSource()).stop();
+					showDown();
+				}
+			}).start();
+		}
 		else fieldFlip();
 	}
 	
