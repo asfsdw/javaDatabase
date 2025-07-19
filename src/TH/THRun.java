@@ -74,15 +74,15 @@ public class THRun extends THDAO {
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				new THAcountSelect();
+				new THAccountSelect();
 			}
 		});
-		btnExit.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
+		btnStart.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
-				if(keyCode == 0) {
+				if(keyCode == 10) {
 					frame.dispose();
-					new THGameStart();
+					new THAccountSelect();
 				}
 			}
 		});
@@ -93,10 +93,10 @@ public class THRun extends THDAO {
 				new THHandRank();
 			}
 		});
-		btnExit.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
+		btnHandRank.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
-				if(keyCode == 0) new THHandRank();
+				if(keyCode == 10) new THHandRank();
 			}
 		});
 		
@@ -115,9 +115,9 @@ public class THRun extends THDAO {
 			}
 		});
 		btnExit.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
+			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
-				if(keyCode == 0) {
+				if(keyCode == 10) {
 					int ans = JOptionPane.showConfirmDialog(frame, "게임을 종료하시겠습니까?","게임종료",JOptionPane.YES_NO_OPTION);
 					if (ans == 0) System.exit(0);
 				}
